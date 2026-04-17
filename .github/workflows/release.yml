@@ -1,0 +1,45 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'mutations/*/v*'
+      - 'mods/*/v*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/${{ github.repository }}/vpk-builder:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    permissions:
+      contents: write
+      packages: read
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Parse tag
+        id: meta
+        run: |
+          TAG="${GITHUB_REF#refs/tags/}"
+          TYPE=$(echo "$TAG" | cut -d'/' -f1)
+          NAME=$(echo "$TAG" | cut -d'/' -f2)
+          VERSION=$(echo "$TAG" | cut -d'/' -f3)
+          echo "type=$TYPE"       >> "$GITHUB_OUTPUT"
+          echo "name=$NAME"       >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=$TAG"         >> "$GITHUB_OUTPUT"
+
+      - name: Build VPK
+        run: |
+          chmod +x tools/build.sh
+          tools/build.sh "${{ steps.meta.outputs.type }}" "${{ steps.meta.outputs.name }}"
+
+      - name: Create release
+        uses: softprops/action-gh-release@v3
+        with:
+          name: "${{ steps.meta.outputs.name }} ${{ steps.meta.outputs.version }}"
+          tag_name: ${{ steps.meta.outputs.tag }}
+          files: dist/${{ steps.meta.outputs.name }}.vpk

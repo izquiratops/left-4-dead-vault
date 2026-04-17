@@ -1,0 +1,6 @@
+name        = Hello World
+description = Minimal mutation template. Use as starting point for new mutations.
+version     = 1.0.0
+author      = left-4-dead-vault
+type        = mutation
+gamemode    = coop
