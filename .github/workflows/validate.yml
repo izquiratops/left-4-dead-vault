@@ -1,0 +1,40 @@
+name: Validate
+
+on:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Check mutations
+        run: |
+          while IFS= read -r dir; do
+            name=$(basename "$dir")
+            missing=()
+            [ -f "$dir/mutation.nut"  ] || missing+=("mutation.nut")
+            [ -f "$dir/manifest.txt"  ] || missing+=("manifest.txt")
+            [ -f "$dir/addoninfo.txt" ] || missing+=("addoninfo.txt")
+            if [ ${#missing[@]} -gt 0 ]; then
+              echo "mutations/$name missing: ${missing[*]}"
+              exit 1
+            fi
+            echo "OK: mutations/$name"
+          done < <(find mutations -maxdepth 1 -mindepth 1 -type d)
+
+      - name: Check mods
+        run: |
+          while IFS= read -r dir; do
+            name=$(basename "$dir")
+            missing=()
+            [ -f "$dir/mod.json"      ] || missing+=("mod.json")
+            [ -f "$dir/addoninfo.txt" ] || missing+=("addoninfo.txt")
+            [ -d "$dir/content"       ] || missing+=("content/")
+            if [ ${#missing[@]} -gt 0 ]; then
+              echo "mods/$name missing: ${missing[*]}"
+              exit 1
+            fi
+            echo "OK: mods/$name"
+          done < <(find mods -maxdepth 1 -mindepth 1 -type d)

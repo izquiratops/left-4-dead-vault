@@ -1,0 +1,12 @@
+# Build artifacts
+dist/
+
+# OS
+.DS_Store
+
+# Editor
+.vscode/
+
+# VPK staging temps
+staging/
+*.vpk.tmp

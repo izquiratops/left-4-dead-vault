@@ -1,0 +1,8 @@
+"AddonInfo"
+{
+	addontitle          "Hello World Mutation"
+	addondescription    "Minimal mutation template for the L4D2 Vault."
+	addonversion        "1.0"
+	addontagline        "Hello World"
+	addonContent_Script 1
+}
