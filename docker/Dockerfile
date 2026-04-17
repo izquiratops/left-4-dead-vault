@@ -3,8 +3,8 @@
 FROM steamcmd/steamcmd:ubuntu-24 AS sdk
 
 RUN steamcmd \
-    +login anonymous \
     +force_install_dir /opt/sdk \
+    +login anonymous \
     +app_update 244310 validate \
     +quit
 
