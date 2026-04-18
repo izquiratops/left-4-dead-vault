@@ -1,5 +1,4 @@
 // Hello World — minimal mutation template
-// See: https://developer.valvesoftware.com/wiki/L4D2_Vscript_Introduction
 
 // Director controls spawning, pacing, and mob density
 DirectorOptions <-

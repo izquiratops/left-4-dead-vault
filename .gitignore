@@ -1,6 +1,9 @@
 # Build artifacts
 dist/
 
+# uv
+.venv/
+
 # OS
 .DS_Store
 

@@ -1,0 +1,7 @@
+[project]
+name = "left-4-dead-vault"
+version = "0.1.0"
+description = "Fixing L4D with custom mutations and workshop plugins"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = ["vpk"]

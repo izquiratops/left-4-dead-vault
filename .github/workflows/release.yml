@@ -9,16 +9,15 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/${{ github.repository }}/vpk-builder:latest
-      credentials:
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
     permissions:
       contents: write
-      packages: read
     steps:
       - uses: actions/checkout@v6
+
+      - uses: astral-sh/setup-uv@v8
+
+      - name: Install dependencies
+        run: uv sync --frozen
 
       - name: Parse tag
         id: meta
@@ -33,9 +32,7 @@ jobs:
           echo "tag=$TAG"         >> "$GITHUB_OUTPUT"
 
       - name: Build VPK
-        run: |
-          chmod +x tools/build.sh
-          tools/build.sh "${{ steps.meta.outputs.type }}" "${{ steps.meta.outputs.name }}"
+        run: uv run python tools/build.py "${{ steps.meta.outputs.type }}" "${{ steps.meta.outputs.name }}"
 
       - name: Create release
         uses: softprops/action-gh-release@v3
