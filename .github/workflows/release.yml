@@ -32,9 +32,7 @@ jobs:
           echo "tag=$TAG"         >> "$GITHUB_OUTPUT"
 
       - name: Build VPK
-        run: |
-          chmod +x tools/build.sh
-          tools/build.sh "${{ steps.meta.outputs.type }}" "${{ steps.meta.outputs.name }}"
+        run: uv run python tools/build.py "${{ steps.meta.outputs.type }}" "${{ steps.meta.outputs.name }}"
 
       - name: Create release
         uses: softprops/action-gh-release@v3
