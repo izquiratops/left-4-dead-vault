@@ -25,6 +25,21 @@ tools/              Build helpers
 3. `content/` mirrors L4D2's VFS layout (`materials/`, `models/`, `sounds/`, `scripts/`)
 4. Tag `mods/<name>/v1.0.0` to trigger a release build
 
+## Building Locally
+
+Build VPK files manually using the build script:
+
+```bash
+uv run tools/build.py <type> <name>
+```
+
+Examples:
+```bash
+uv run tools/build.py mutations hello-world
+```
+
+Output appears in `dist/<name>.vpk`
+
 ## CI Workflows
 
 | Workflow | Trigger | Action |
@@ -33,3 +48,10 @@ tools/              Build helpers
 | `release` | Tag `{type}/{name}/v{semver}` | Builds VPK, creates GitHub Release |
 
 Download VPKs from the [Releases](../../releases) tab.
+
+## Official Documentation
+
+- [Intro to Scripting](https://developer.valvesoftware.com/wiki/Left_4_Dead_2/Scripting)
+- [Expanded Mutation System](https://developer.valvesoftware.com/wiki/Left_4_Dead_2/Scripting/Expanded_Mutation_System)
+- [Mutation Gametype](https://developer.valvesoftware.com/wiki/Left_4_Dead_2/Scripting/Mutation_Gametype)
+- [Decrypted Mutations](https://developer.valvesoftware.com/wiki/Left_4_Dead_2/Scripting/Decrypted_mutations)
