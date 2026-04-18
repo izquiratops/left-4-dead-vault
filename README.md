@@ -35,12 +35,3 @@ docker/             VPK builder image (SteamCMD + vpk binary)
 | `docker-publish` | Changes to `docker/Dockerfile` | Rebuilds VPK builder image on GHCR |
 
 Download VPKs from the [Releases](../../releases) tab.
-
-## First-time Setup
-
-Before the release workflow runs, the Docker image must be built and pushed:
-
-```bash
-# Trigger manually after pushing docker/Dockerfile
-gh workflow run docker-publish.yml
-```

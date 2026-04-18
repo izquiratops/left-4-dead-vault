@@ -4,6 +4,8 @@ on:
   push:
     branches: [main]
     paths: [docker/Dockerfile]
+  pull_request:
+    paths: [docker/Dockerfile]
   workflow_dispatch:
 
 env:
@@ -11,7 +13,24 @@ env:
   IMAGE_NAME: ${{ github.repository }}/vpk-builder
 
 jobs:
-  build-push:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: docker/setup-buildx-action@v4
+
+      - uses: docker/build-push-action@v7
+        with:
+          context: docker
+          push: false
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  push:
+    needs: build
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     permissions:
       contents: read
