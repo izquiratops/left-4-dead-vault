@@ -16,7 +16,7 @@ DIST="dist"
 
 mkdir -p "$DIST"
 
-# This big chunk prepares the source to be bundled to VPK
+# Prepares the source to be bundled as VPK
 case "$TYPE" in
   mutations)
     mkdir -p "$STAGING/scripts/vscripts"
@@ -40,8 +40,9 @@ case "$TYPE" in
     ;;
 esac
 
-vpk "$STAGING"
-mv "${STAGING}.vpk" "${DIST}/${NAME}.vpk"
+# Run the bundle
+# Left 4 Dead 2 must run vpk with -cv 1
+uv run vpk -cv 1 -c "$STAGING" "${DIST}/${NAME}.vpk"
 rm -rf "$STAGING"
 
 echo "Built: ${DIST}/${NAME}.vpk"

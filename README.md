@@ -8,7 +8,6 @@ Enjoymaxxing the best game ever made with LLMs. Content is built automatically a
 mutations/          Squirrel (.nut) mutation scripts
 mods/               Source mod content (materials, models, sounds, scripts)
 tools/              Build helpers
-docker/             VPK builder image (SteamCMD + vpk binary)
 .github/workflows/  CI/CD pipelines
 ```
 
@@ -32,6 +31,5 @@ docker/             VPK builder image (SteamCMD + vpk binary)
 |---|---|---|
 | `validate` | Every PR | Checks required files exist |
 | `release` | Tag `{type}/{name}/v{semver}` | Builds VPK, creates GitHub Release |
-| `docker-publish` | Changes to `docker/Dockerfile` | Rebuilds VPK builder image on GHCR |
 
 Download VPKs from the [Releases](../../releases) tab.
